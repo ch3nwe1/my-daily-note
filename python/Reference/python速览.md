@@ -76,9 +76,11 @@ Python 用 `**` 运算符计算乘方[^1]
 
 
 Python字符串不支持修改，因此某个索引赋值就会报错
+
 ![](../assets/Pasted%20image%2020260518144459.png)
 
 内置函数 [`len()`](https://docs.python.org/zh-cn/3.14/library/functions.html#len "len") 返回字符串的长度
+
 ![](../assets/Pasted%20image%2020260518144621.png)
 
 # 列表
@@ -87,19 +89,25 @@ Python 支持多种 _复合_ 数据类型，可将不同值组合在一起。�
 ![](../assets/Pasted%20image%2020260518145209.png)
 
 和字符串一样，支持索引和切片
+
 ![](../assets/Pasted%20image%2020260518145620.png)
 
 和字符串不同的是**列表**是可变的，支持索引和切片的方式修改
+
 ![](../assets/Pasted%20image%2020260518145933.png)
 
 也可以通过`append`方法向列表末尾追加元素
+
 ![](../assets/Pasted%20image%2020260518150101.png)
 
 Python 中的简单赋值绝不会复制数据。 当你将一个列表赋值给一个变量时，该变量将引用 _现有的列表_。你通过一个变量对列表所做的任何更改都会被引用它的所有其他变量看到。
+
 ![](../assets/Pasted%20image%2020260518150646.png)
 
 切片操作返回包含请求元素的新列表。以下切片操作会返回列表的 [浅拷贝](https://docs.python.org/zh-cn/3.14/library/copy.html#shallow-vs-deep-copy)：
+
 ![](../assets/Pasted%20image%2020260518150936.png)
+
 为切片赋值可以改变列表大小，甚至清空整个列表：
 ![](../assets/Pasted%20image%2020260518151552.png)
 
