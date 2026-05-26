@@ -134,3 +134,72 @@ from typing import Callable
 def process_data(callback: Callable[..., str]):
     pass
 ```
+
+##  numbers.Number
+
+在 Python 中，`numbers.Number` 是所有**数值类型的抽象基类**
+
+它的层级结构如下：
+- **`Number`**：整个层级的根节点。所有数字类型都继承自它。
+- **`Complex`**：复数（包含内置的 `complex`）。
+- **`Real`**：实数（包含内置的 `float`）。
+- **`Rational`**：有理数/分数（包含 `fractions.Fraction`）。
+- **`Integral`**：整数（包含内置的 `int` 和 `bool`）。
+## 序列
+**不可变序列**
+1. 字符串 str
+2. 元组 tuple
+3. 字节串 bytes
+**可变序列**
+4. 列表 list
+5. 字节数组 bytearray
+## 集合 set
+1. 元素无序
+2. 元素唯一
+使用大括号<b>{}</b>创建
+```python
+fruits = {'apple','banana','cherry'}
+print(fruits) #{'banana', 'apple', 'cherry'}
+```
+使用内置函数创建`set()`
+创建空集合使用`set()`,使用`{}`构建的是空字典
+```python
+# 正确创建空集合  
+empty_set = set()  
+print(type(empty_set))  # 输出: <class 'set'>  
+  
+# 错误示范  
+empty_dict = {}  
+print(type(empty_dict))  # 输出: <class 'dict'>
+```
+使用其他可迭代对象转换为集合
+```python
+# 将列表(List)转换为集合（自动去重）
+my_list = [1, 4, 4, 2, 5, 1]
+my_set = set(my_list)
+print(my_set)  # 输出: {1, 2, 4, 5}
+
+# 将字符串(String)转换为集合（拆分为单个字符并去重）
+char_set = set("hello")
+print(char_set)  # 输出类似: {'h', 'e', 'l', 'o'}
+```
+创建不可变集合，使用`frozenset`
+
+```python
+# 创建不可变集合
+frozen = frozenset([1, 2, 3, 3])
+print(frozen)  # 输出: frozenset({1, 2, 3})
+
+# 尝试添加元素会报错： AttributeError
+# frozen.add(4)
+```
+
+什么对象可以放入集合？
+Python 的集合有一个核心限制：**集合里的元素必须是“可哈希的”（Hashable），简单来说就是不可变对象**
+```python
+# 正确：元组是不可变的，可以作为集合元素
+valid_set = {(1, 2), (3, 4)} 
+
+# 错误：列表是可变的，会抛出 TypeError: unhashable type: 'list'
+# invalid_set = {[1, 2], [3, 4]}
+```
