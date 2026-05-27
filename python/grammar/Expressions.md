@@ -310,5 +310,65 @@ print(~p) # Point(-2, -3)
 | `!=`        | 比较两边对象的值是否不等       | `__ne__(self, other)`      |
 | `is/is not` | 判断两边对象是否指向同一个内存地址  | **无**                      |
 | `in/not in` | 检查左边的元素是否包含在右边的容器中 | `__contains__(self, item)` |
+|             |                    |                            |
 
+## 赋值表达式
 
+```EBNF
+assignment_expression: [identifier ":="] expression
+```
+
+赋值表达式（有时又被称为“命名表达式”或“海象表达式”）将一个 expression 赋值给一个 identifier，同时还会返回 expression 的值。
+
+在传统语法中，**“赋值”是一个语句（Statement）**，而**不是一个表达式（Expression）**。这意味着你不能把赋值写在 `if` 或 `while` 的条件判断里面。
+```python
+user_info = {"level": 8}
+
+# 必须先独立写一行赋值语句
+level = user_info.get("level", 0) 
+if level > 5:
+    print(f"高级用户欢迎您，您的等级是: {level}")
+```
+
+使用 `:=`，我们可以把“获取数据、赋值给变量、进行大小判断”这三件事**压缩到一行代码**中：
+
+```python
+user_info = {"level": 8}
+
+# 在 if 判断内部直接完成赋值！
+if (level := user_info.get("level", 0)) > 5:
+    print(f"高级用户欢迎您，您的等级是: {level}")
+```
+
+## 条件表达式
+
+条件表达式（有时称为“三元运算符”）是 if-else 语句的替代物。 由于它是表达式，它会返回一个值并可作为子表达式出现。
+表达式 `x if C else y` 首先是对条件 _C_ 而非 _x_ 求值。 如果 _C_ 为真，_x_ 将被求值并返回其值；否则将对 _y_ 求值并返回其值。
+
+```EBNF
+conditional_expression: or_test ["if" or_test "else" expression]
+expression:             conditional_expression | lambda_expr
+```
+
+## lambda表达式
+
+```EBNF
+lambda_expr: "lambda" [parameter_list] ":" expression
+```
+lambda 表达式（有时称为 lambda 构型）被用于创建匿名函数。 表达式 `lambda parameters: expression` 会产生一个函数对象 。 
+
+传统写法
+```python
+def add(x, y):
+    return x + y
+
+print(add(5, 3)) # 输出: 8
+```
+
+Lambda写法
+```python
+# 把 lambda 赋值给变量（虽然实际开发不推荐这样用，但有助于理解）
+add_lambda = lambda x, y: x + y
+
+print(add_lambda(5, 3)) # 输出: 8
+```
