@@ -203,3 +203,4 @@ valid_set = {(1, 2), (3, 4)}
 # 错误：列表是可变的，会抛出 TypeError: unhashable type: 'list'
 # invalid_set = {[1, 2], [3, 4]}
 ```
+
