@@ -29,6 +29,23 @@ if result:
 
 它会从左到右扫描整个字符串，一旦找到**第一个**匹配的内容就会立即停止，并返回一个 `Match` 对象。如果全文本都没找到，返回 `None`
 
+用 `re.search/findall()` 搭配 `^` + 多行模式 (`re.M`)
+```python
+import re
+text = """Apple is red. 
+	Banana is yellow. 
+	Apple is sweet."""
+# 开启多行模式（flags=re.M）
+# 此时，^ 能识别出第二行和第三行的行首！
+match = re.search(r"^Banana", text, flags=re.M)
+print(match.group())  
+# 成功输出: Banana！
+
+# 如果用 findall，能把所有行首的 Apple 都抓出来
+print(re.findall(r"^Apple", text, flags=re.M))
+# 输出: ['Apple', 'Apple'] —— 第一行和第三行行首的 Apple 都被抓到了！
+```
+
 ## re.findall()
 如果你想把文本里所有符合条件的内容都榨取出来，用 `findall` 最合适。它会直接返回一个**包含所有匹配字串的列表**。
 
