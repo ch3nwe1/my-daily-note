@@ -12,16 +12,17 @@ metadata: # 元数据
 	annotations: # 存储非结构化扩展信息 - - 不参与 label selector
 spec:
 	containers: # 容器列表
-		- name: # 容器名称
+		- name: # 容器名称 有规范，遵循DNS_LABEL
 		  image: # 镜像名称
-		  imagePullPolicy: # 镜像拉取策略
+		  imagePullPolicy: # 镜像拉取策略 Always,Never,IfNotPresent
+		  # EntryPoint 覆盖容器中的启动命令
 		  command:
 		  args: 
 		  workingDir:
 		  ports:
 			 containerPort:
-			 hostIP:
-			 hostPort:
+			 hostIP: # 宿主机IP
+			 hostPort: # 宿主机端口
 			 name:
 			 protocol:
 		 env:
@@ -128,3 +129,9 @@ spec:
 	securityContext:
 	            
 ```
+
+### containers.imagePullPolicy
+- Always: 总是拉取镜像
+- IfNotPresent：如果镜像不存在，才获取镜像
+- Never: 从不获取镜像，使用本地镜像，如果本地不存在，pod启动报错
+如果镜像标签中是`latest`,则默认值是`Always`,否则是`IfNotPresent`。
