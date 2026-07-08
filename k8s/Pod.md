@@ -25,30 +25,32 @@ spec:
 			 hostPort: # 宿主机端口
 			 name:
 			 protocol:
-		 env:
+		 env: # 存入容器中的环境变量
 			 - name:
-			   value:
+			   value: # 可以使用${}引用其他环境变量
 			   valueFrom:
 				   configMapKeyRef:
 					   key:
 					   name:
 					   optional:
 					fieldRef:
+						fieldPath:
+						apiVersion: # 默认v1
 					resourceFieldRef:
 					secretKeyRef:
 						key:
 						name:
 						optional:
-		 envFrom:
-			configMapRef:
-				name:
-				optional:
+		 envFrom: # 将configmap或secret中的所有数据都加入到环境变量中
+			configMapRef: # 引用configmap
+				name: # configmap的名字
+				optional: # 引用的资源不存在是否报错 true代表可选的，不报错
 			prefix:
 			secretRef:
 				name:
 				optional:
 		 volumeMounts:
-			- mountPath:
+			- :
 			  name:
 			  mountPropagation:
 			  readOnly:
@@ -97,6 +99,8 @@ spec:
 	os: # 指定 Pod 中容器的操作系统。如果设置了此属性，则某些 Pod 和容器字段会受到限制
 		name: # name 是操作系统的名称。当前支持的值是 `linux` 和 `windows`
 	volumes: # 可以由属于 Pod 的容器挂载的卷列表
+		- name: # 数据卷唯一标识
+		  emptyDir: #代表临时目录，使用{},多用于一个pod中多容器之间的交互，与pod生命周期相同
 	nodeSelector: # nodeSelector 是一个选择算符，这些算符必须取值为 true 才能认为 Pod 适合在节点上运行。 选择算符必须与节点的标签匹配，以便在该节点上调度 Pod
 	nodeName:  # nodeName 是将此 Pod 调度到特定节点的请求。 如果字段值不为空，调度器只是直接将这个 Pod 调度到所指定节点上，假设节点符合资源要求。
 	affinity: # 亲和度
