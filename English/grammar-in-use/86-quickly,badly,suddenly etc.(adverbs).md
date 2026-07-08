@@ -3,9 +3,7 @@ He ate his dinner very **quickly**.
 
 > **quickly** and **suddenly** are **adverbs**
 
-```English
-adjective + -ly -> adverbs
-```
+**Rule:** adjective + -ly → adverbs
 
 | quick   | bad   | sudden   | careful   | heavy   |      |
 | ------- | ----- | -------- | --------- | ------- | ---- |
@@ -15,62 +13,45 @@ adjective + -ly -> adverbs
 
 > Adverbs tell you how something happens or how somebody does something:
 
-- [ ] The train stoped **suddenly**.
+- [ ] The train **stopped** **suddenly**.
 - [ ] I opened the door **slowly**.
 - [ ] Please listen **carefully**.
 - [ ] I understand you **perfectly**.
 
-**==Compare==**:
-```columns
-id: 7wvTYDQyc1yE-fCc3MYM8
-===
-adjective
-- [ ] Sue is very **quiet**.
-- [ ] Be **careful**.
-- [ ] It was a **bad** game.
-- [ ] I felt **nervous**.(= I was **nervous**)
-===
-adverbs
-- [ ] Sue speaks very **quietly**.(not speaks very quiet)
-- [ ] Listen **carefully**!
-- [ ] Our team played **badly**.(not played bad)
-- [ ] I waited nervously.
-```
+**Compare**:
+
+| Adjective | Adverbs |
+| :-------- | :------ |
+| Sue is very **quiet**. | Sue speaks very **quietly**. (not ~~speaks very quick~~) |
+| Be **careful**. | Listen **carefully**! |
+| It was a **bad** game. | Our team played **badly**. (not ~~played bad~~) |
+| I felt **nervous**. (= I was **nervous**) | I waited **nervously**. |
 
 ---
+
+These words are both adjectives and adverbs:
 
 | hard | fast | late | early |
 | ---- | ---- | ---- | ----- |
-These words are adjective and adverbs.
-```columns
-id: 7d_Ow0X79i77Pl-ZVr1ib
-===
 
-- [ ] Sue's job is very **hard**.
-- [ ] Ben is a **fast** runner.
-- [ ] The bus was **late**/**early**.
-===
+| Adjective | Adverbs |
+| :-------- | :------ |
+| Sue's job is very **hard**. | Sue works very **hard**. |
+| Ben is a **fast** runner. | Ben can run **fast**. |
+| The bus was **late** / **early**. | I went to bed **late** / **early**. |
 
-- [ ] Sue works very **hard**.
-- [ ] Ben can run **fast**.
-- [ ] I went to bed **late**/**early**.
-```
 ---
 
-**good**(adjective)  ->  **well**(adverb)
-```columns
-id: U-YrFW2BUlWkh2S-YdOV7
-===
+**good** (adjective) → **well** (adverb)
 
-- [ ] Your English is very **good**.
-- [ ] It was a **good** game.
-===
+| Adjective | Adverbs |
+| :-------- | :------ |
+| Your English is very **good**. | You speak English very **well**. |
+| It was a **good** game. | Our team played **well**. |
 
-You speak English very **well**.
-Our team played **well**.
-```
-But well is also an adjective(= not ill, in good health):
-- [ ] 'How are you?'      'I'm very well, thank you. And you?'
+But **well** is also an adjective (= not ill, in good health):
+
+- [ ] 'How are you?' 'I'm very **well**, thank you. And you?'
 
 ---
 
