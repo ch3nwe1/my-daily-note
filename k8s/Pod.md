@@ -51,10 +51,11 @@ spec:
 				optional:
 		 volumeMounts:
 			- :
-			  name:
+			  name: # 数据卷的名称，与volumes中的name对应
 			  mountPropagation:
-			  readOnly:
-			  subPath:
+			  mountPath: # 挂载到容器中的路径
+			  readOnly: # 容器只能读取数据，不能写入
+			  subPath: # 针对数据卷的子路径或者文件
 			  subPathExpr:
 		 volumeDevices:
 			- devicePath:
@@ -101,6 +102,9 @@ spec:
 	volumes: # 可以由属于 Pod 的容器挂载的卷列表
 		- name: # 数据卷唯一标识
 		  emptyDir: #代表临时目录，使用{},多用于一个pod中多容器之间的交互，与pod生命周期相同
+		  hostPath:
+			  path:
+			  type:
 	nodeSelector: # nodeSelector 是一个选择算符，这些算符必须取值为 true 才能认为 Pod 适合在节点上运行。 选择算符必须与节点的标签匹配，以便在该节点上调度 Pod
 	nodeName:  # nodeName 是将此 Pod 调度到特定节点的请求。 如果字段值不为空，调度器只是直接将这个 Pod 调度到所指定节点上，假设节点符合资源要求。
 	affinity: # 亲和度
