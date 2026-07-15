@@ -63,23 +63,53 @@ spec:
 		 resources:
 			claims:
 				- name:
-			limits:
+			limits: # 资源请求的上线
+				cpu: # 占用系统cpu的资源，以时间进行切分，1个cpu核心等于1000毫核
+				memory: # 占用的最大硬盘内存，使用2进制计算单位，Mi,Gi,Ki
+			requests: # 资源请求的下限
 				cpu:
 				memory:
-			requests:
-				cpu:
-				memory:
-		 resizePolicy: 
-			 - resourceName:
-			   restartPolicy:
+		 resizePolicy: # 调整resources配置的资源时，pod重启策略
+			 - resourceName: # cpu和memory
+			   restartPolicy: # NotRequired 不需要重启，RestartContainer需要重启
 		 lifecycle:
-			 postStart:
-			 preStop:
+			 postStart: # 创建容器后立即调用 postStart。如果处理程序失败，则容器将根据其重新启动策略终止并重新启动。 容器的其他管理阻塞直到钩子完成
+				 exec: 
+					 command:  # command 是要在容器内执行的命令行，命令的工作目录是容器文件系统中的根目录（'/'）
+				 httpGet: 
+					 port:
+					 host:
+					 httpHeaders:
+						 - name:
+						   value:
+					 path:
+					 scheme:
+				 tcpSocket: # 已经弃用
+					 port:
+					 host:
+			 preStop: # 与 postStart一致
 		 terminationMessagePath:
 		 terminationMessagePolicy:
-		 livenessProbe:
-		 readinessProbe:
-		 startupProbe:
+		 livenessProbe: # 定期探针容器活跃度。如果探针失败，容器将重新启动。无法更新
+		 readinessProbe: # 定期探测容器服务就绪情况。如果探针失败，容器将被从服务端点中删除。
+		 startupProbe: # startupProbe 表示 Pod 已成功初始化。如果设置了此字段，则此探针成功完成之前不会执行其他探针。 如果这个探针失败，Pod 会重新启动，就像存活态探针失败一样。 这可用于在 Pod 生命周期开始时提供不同的探针参数，此时加载数据或预热缓存可能需要比稳态操作期间更长的时间
+			 exec:
+				 command:
+			 httpGet:
+				  port :
+				  host:
+				  httpHeaders:
+				  path:
+				  schema:
+			 initialDelaySeconds: # 容器启动后延迟多久开始调用liveness probes 
+			 terminationGracePeriodSeconds:
+			 periodSeconds:
+			 timeoutSeconds:
+			 failureThreshold:
+			 successThreshold:   
+			 grpc:
+				 port:
+				 service: 
 		 restartPolicy:
 		 securityContext:
 			 runAsUser:
@@ -101,14 +131,14 @@ spec:
 		name: # name 是操作系统的名称。当前支持的值是 `linux` 和 `windows`
 	volumes: # 可以由属于 Pod 的容器挂载的卷列表
 		- name: # 数据卷唯一标识
-		  emptyDir: #代表临时目录，使用{},多用于一个pod中多容器之间的交互，与pod生命周期相同
+		  emptyDir: #代表临时目录，使用{},多用于一个pod中多容器之间的交互，与pod生命周期相同,默认路径/var/lib/kubelet/pods/<pod-uid>/volumes/kubernetes.io~empty-dir/<volume-name>/
 		  hostPath:
 			  path:
 			  type:
 	nodeSelector: # nodeSelector 是一个选择算符，这些算符必须取值为 true 才能认为 Pod 适合在节点上运行。 选择算符必须与节点的标签匹配，以便在该节点上调度 Pod
 	nodeName:  # nodeName 是将此 Pod 调度到特定节点的请求。 如果字段值不为空，调度器只是直接将这个 Pod 调度到所指定节点上，假设节点符合资源要求。
 	affinity: # 亲和度
-	tolerations：# 容忍度
+	tolerations: # 容忍度
 	schedulerName： #- 如果设置了此字段，则 Pod 将由指定的调度器调度。如果未指定，则使用默认调度器来调度 Pod。
 	runtimeClassName: 
 	priorityClassName: 
@@ -143,3 +173,18 @@ spec:
 - IfNotPresent：如果镜像不存在，才获取镜像
 - Never: 从不获取镜像，使用本地镜像，如果本地不存在，pod启动报错
 如果镜像标签中是`latest`,则默认值是`Always`,否则是`IfNotPresent`。
+
+### volumes
+#### hostPath
+
+#####  type
+
+| Directory         | 必须是目录      |
+| ----------------- | ---------- |
+| DirectoryOrCreate | 不存在就创建     |
+| File              | 必须是文件      |
+| FileOrCreate      | 不存在就创建     |
+| Socket            | 必须是 socket |
+| CharDevice        | 字符设备       |
+| BlockDevice       | 块设备        |
+
