@@ -188,3 +188,26 @@ spec:
 | CharDevice        | 字符设备       |
 | BlockDevice       | 块设备        |
 
+## pod 生命周期
+
+### pod 阶段
+pod的`status`字段是个[PodStatus]()对象，其中包含一个`phase`字段.
+
+- Pending: Pod 已被 Kubernetes 系统接受，但有一个或者多个容器尚未创建亦未运行。此阶段包括等待 Pod 被调度的时间和通过网络下载镜像的时间。
+- Running:  Pod 已经绑定到了某个节点，Pod 中所有的容器都已被创建。至少有一个容器仍在运行，或者正处于启动或重启状态。
+- Succeeded: Pod 中的所有容器都已成功结束，并且不会再重启。
+- Failed: Pod 中的所有容器都已终止，并且至少有一个容器是因为失败终止。也就是说，容器以非 0 状态退出或者被系统终止，且未被设置为自动重启。
+- Unknown: 因为某些原因无法取得 Pod 的状态。这种情况通常是因为与 Pod 所在主机通信失败。
+### 容器状态
+- Waiting: 容器仍在运行前的准备阶段（如正在拉取镜像、等待依赖卷挂载）。
+- Running: 容器正在无间断地正常执行。
+- Terminated: 容器已经开始执行并已运行完毕（或由于某种原因失败退出）。
+### pod condition
+- PodScheduled: Pod 已经被调度到某节点；
+- PodReadyToStartContainers: Pod 沙箱被成功创建并且配置了网络
+- ContainersReady: Pod 中所有容器都已就绪；
+- Initialized: 所有的 [Init 容器](https://v1-35.docs.kubernetes.io/zh-cn/docs/concepts/workloads/pods/init-containers/)都已成功完成；
+- Ready: Pod 可以为请求提供服务，并且应该被添加到对应服务的负载均衡池中。
+- `DisruptionTarget`：由于干扰（例如抢占、驱逐或垃圾回收），Pod 即将被终止。
+- PodResizePending：已请求对 Pod 进行调整大小，但尚无法应用。 详见 Pod 调整大小状态。
+- PodResizeInProgress：Pod 正在调整大小中。 详见 Pod 调整大小状态。
