@@ -211,3 +211,21 @@ pod的`status`字段是个[PodStatus]()对象，其中包含一个`phase`字段.
 - `DisruptionTarget`：由于干扰（例如抢占、驱逐或垃圾回收），Pod 即将被终止。
 - PodResizePending：已请求对 Pod 进行调整大小，但尚无法应用。 详见 Pod 调整大小状态。
 - PodResizeInProgress：Pod 正在调整大小中。 详见 Pod 调整大小状态。
+## Qos
+**Quality of Service**, 服务质量，当 Node 上没有足够可用资源时要驱逐哪些 Pod。可选的 QoS 类有 `Guaranteed`、`Burstable` 和 `BestEffort`， 当一个 Node 耗尽资源时，Kubernetes 将首先驱逐在该 Node 上运行的 `BestEffort` Pod， 然后是 `Burstable` Pod，最后是 `Guaranteed` Pod。
+
+### Guaranteed
+Pod 被赋予 `Guaranteed` QoS 类的几个判据：
+- Pod 中的每个容器必须有内存 limit 和内存 request，两者都必须大于零。
+- 对于 Pod 中的每个容器，内存 limit 必须等于内存 request。
+- Pod 中的每个容器必须有 CPU limit 和 CPU request，两者都必须大于零。
+- 对于 Pod 中的每个容器，CPU limit 必须等于 CPU request。
+> 如果你在容器里**只写了 `limits`**，没有写 `requests`，K8s 会默认自动把 `requests` 赋上与 `limits` 一模一样的值，因此此时也会被自动划分为 **Guaranteed**。
+### Burstable
+Pod 被赋予 `Burstable` QoS 类的几个判据：
+- Pod 不满足针对 QoS 类 `Guaranteed` 的判据。
+- Pod 中至少一个容器有内存或 CPU 的 request 或 limit，或者 Pod 本身设置了 Pod 级别的内存或 CPU 的 request 或 limit。
+### BestEffort
+`BestEffort` QoS 类中的 Pod 可以使用未专门分配给其他 QoS 类中的 Pod 的节点资源。 例如若你有一个节点有 16 核 CPU 可供 kubelet 使用，并且你将 4 核 CPU 分配给一个 `Guaranteed` Pod， 那么 `BestEffort` QoS 类中的 Pod 可以尝试任意使用剩余的 12 核 CPU。
+
+如果节点遇到资源压力，kubelet 将优先驱逐 `BestEffort` Pod。
