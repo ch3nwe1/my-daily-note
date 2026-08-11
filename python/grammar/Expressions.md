@@ -277,6 +277,85 @@ print(~p) # Point(-2, -3)
 6. `+` `__add__()` 和 `__radd__()`
 7. `-` `__sub__()` 和 `__rsub__()`
 
+## 增强赋值运算符
+
+增强赋值运算符（Augmented Assignment）是 `=` 与其他运算符的组合简写形式，例如 `+=`、`-=`、`*=` 等。它们既简化了代码，又在底层有特殊的行为差异。
+
+### 基本语法
+
+```python
+x = 10
+x += 5   # 等价于 x = x + 5
+x -= 3   # 等价于 x = x - 3
+x *= 2   # 等价于 x = x * 2
+x /= 4   # 等价于 x = x / 4
+```
+
+### `+=` 对列表的特殊行为
+
+对于列表（list），`+=` **不是**创建一个新列表，而是**原地修改**（in-place），等价于调用 `extend()`：
+
+```python
+# 数值类型：+= 创建新对象
+a = 10
+print(id(a))    # 例如：140732123456789
+a += 5
+print(id(a))    # 新的 id：140732123456901（不同的对象）
+
+# 列表类型：+= 原地修改
+lst = [1, 2]
+print(id(lst))  # 例如：140732987654321
+lst += [3, 4]   # 等价于 lst.extend([3, 4])
+print(id(lst))  # 相同的 id：140732987654321（原对象被修改）
+print(lst)      # [1, 2, 3, 4]
+```
+
+这与 `+` 运算符不同：
+
+```python
+# lst = lst + [3, 4] 会创建新列表
+lst = [1, 2]
+new_lst = lst + [3, 4]  # 创建新列表，lst 不变
+print(lst)      # [1, 2]（未改变）
+print(new_lst)  # [1, 2, 3, 4]（新对象）
+```
+
+### 魔术方法对照表
+
+| 运算符 | 魔术方法              | 等价于           |
+| :----: | :-------------------: | :---------------: |
+| `+=`   | `__iadd__`            | `extend()` (list) |
+| `-=`   | `__isub__`            |                   |
+| `*=`   | `__imul__`            |                   |
+| `/=`   | `__itruediv__`        |                   |
+| `//=`  | `__ifloordiv__`       |                   |
+| `%=`   | `__imod__`            |                   |
+| `**=`  | `__ipow__`            |                   |
+| `<<=`  | `__ilshift__`         |                   |
+| `>>=`  | `__irshift__`         |                   |
+| `&=`   | `__iand__`            |                   |
+| `\|=`  | `__ior__`             |                   |
+| `^=`   | `__ixor__`            |                   |
+
+### 实际应用示例
+
+在多轮对话中追加消息列表：
+
+```python
+messages = [
+    {"role": "system", "content": "You are a helpful assistant."},
+    {"role": "user", "content": "What is the capital of France?"},
+]
+
+response = client.chat.completions.create(model="gpt-4", messages=messages)
+
+# 把模型的回复追加到列表中
+messages += [response.choices[0].message]
+
+# 继续追加新的用户输入
+messages += [{"role": "user", "content": "And its population?"}]
+```
+
 ## 位移运算
 1. `>>` 右移 把数字 `x` 的二进制形式整体**向右移动 `n` 位**，左边空出来的位用**符号位**（正数补 `0`，负数补 `1`）填补，右边溢出的位直接丢弃。具体来说，`x >> n` 的数学本质是**地板除**, $x//2^n$ 自定义接口`__lshift__`和`__rlshift__`
 2. `<<` 左移 **左移 1 位相当于乘以 $2$**。 因此，`x << n` 的数学本质就是：$x * 2^n$,自定义函数`__rshift__`和`__rshift__`
